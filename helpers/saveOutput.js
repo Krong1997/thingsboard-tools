@@ -1,11 +1,11 @@
 const fs = require('fs');
-const { FILE, DEVICE } = require('../constant/env');
+const { FILE } = require('../constant/env');
 const { showLog } = require('./showMsgOnLog');
+const deviceList = require('../output/deviceList.json');
 
 function saveTestInformation(count) {
     showLog('Save output...');
     // 要處理檔案不存在的問題，可能從init下手
-    const deviceList = require(`../output/${DEVICE.deviceListFileName}`);
     const jsonPath = FILE.logFilePath;
     const data = JSON.stringify({
         deviceCount: deviceList.length,

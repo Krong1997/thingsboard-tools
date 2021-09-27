@@ -4,7 +4,7 @@ async function getDeviceTokenList(deviceList) {
     try {
         const deviceTokenList = [];
 
-        if (!Array.isArray(deviceList)) throw new Error('deviceList is not a array');
+        if (!Array.isArray(deviceList)) return deviceTokenList;
 
         for (let i = 0; i < deviceList.length; i += 1) {
             // eslint-disable-next-line no-await-in-loop

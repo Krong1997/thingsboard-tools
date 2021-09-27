@@ -11,7 +11,7 @@ async function sendTwoWayRPCToDevice() {
                 test: 'test',
             },
         });
-    }, 11000);
+    }, 31000);
 }
 
 sendTwoWayRPCToDevice();

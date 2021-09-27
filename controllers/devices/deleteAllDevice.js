@@ -1,10 +1,10 @@
 const { proxyToTB } = require('../api/proxyToTB');
-const { SERVER, DEVICE } = require('../../constant/env');
+const { SERVER } = require('../../constant/env');
+const deviceList = require('../../output/deviceList.json');
 
 async function deleteAllDevice() {
     try {
         // 要處理檔案不存在的問題，可能從init下手
-        const deviceList = require(`../../output/${DEVICE.deviceListFileName}`);
 
         if (!Array.isArray(deviceList)) throw new Error('device is not array');
 

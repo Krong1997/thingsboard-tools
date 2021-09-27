@@ -3,6 +3,8 @@ const { getTenantJWTToken } = require('../user/getTenantToken');
 
 let token;
 
+// add error handler
+
 async function tryGetTokenAndResendRequest(config) {
     token = await getTenantJWTToken();
 
@@ -33,6 +35,7 @@ async function proxyToTB(config) {
         return response;
     } catch (error) {
         console.error('Proxy to TB error:', error);
+        return error;
     }
 }
 
