@@ -27,7 +27,7 @@ function publishData(config) {
     } = config;
 
     const timeId = setInterval(() => {
-        const data = jsonStringify(rawData());
+        const data = jsonStringify(rawData(device.name, device.storageNum));
 
         client.publish(telemetryTopic, data, () => {
             showSimpleMessage(`${device.name} send data`);
@@ -49,19 +49,23 @@ function connectToTB(config) {
         deviceListLength,
         isSendData,
         isSubscribeRPC,
+        isConnect,
     } = config;
-    const client = initConnect(device);
 
-    if (isSendData) {
-        showDebugLog('MQTT', 'Client will send data');
-        setTimeout(() => {
-            publishData({ ...config, client });
-        }, (connectDelay * deviceListLength));
-    }
+    if (isConnect) {
+        const client = initConnect(device);
 
-    if (isSubscribeRPC) {
-        showDebugLog('MQTT', 'Client will subscribe RPC topic');
-        subscribeRPC(client);
+        if (isSendData) {
+            showDebugLog('MQTT', 'Client will send data');
+            setTimeout(() => {
+                publishData({ ...config, client });
+            }, (connectDelay * deviceListLength));
+        }
+
+        if (isSubscribeRPC) {
+            showDebugLog('MQTT', 'Client will subscribe RPC topic');
+            subscribeRPC(client);
+        }
     }
 }
 
@@ -76,6 +80,7 @@ function MQTTConnecter(config) {
             device,
             idx,
             deviceListLength,
+            isConnect: Math.random() > 0.5,
         };
 
         timeArr[idx] = 0;

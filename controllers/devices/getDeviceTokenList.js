@@ -35,6 +35,7 @@ async function getDeviceTokenList(deviceList) {
             name: deviceList[i].name,
             id: deviceList[i].id,
             token,
+            storageNum: 0,
         });
     }
     showDebugLog('Device', 'Output device token list', `Device token list length: ${deviceTokenList.length}`);
