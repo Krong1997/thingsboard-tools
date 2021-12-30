@@ -328,3 +328,6 @@ After run this script, the token will save to `output/JWTToken.txt`
 npm run save-token
 ```
 
+## 6. Custom publish attribute or telemetry
+You can modify source code to change publish data.
+This file path: /helpers/mockData.js
