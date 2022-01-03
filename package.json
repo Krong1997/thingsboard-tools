@@ -8,7 +8,7 @@
     "init": "mkdir config && mkdir output && cd output && mkdir RPC && mkdir mockData && mkdir error && cd ../ && node ./application/initFolder.js",
     "add-device": "node ./application/addDevice.js",
     "remove-device": "node ./application/deleteDevice.js",
-    "device-start": "node ./application/sendStaticData.js && node ./application/runVirtualDevice.js",
+    "start-device": "node ./application/sendStaticData.js && node ./application/runVirtualDevice.js",
     "save-token": "node ./application/saveToken.js",
     "send-RPC": "node ./application/sendTwoWayRPCToDevice.js",
     "init-static-data": "node ./application/sendStaticData.js"
