@@ -2,6 +2,7 @@ const {
     MQTT,
     FILE,
     BUFFER,
+    DEVICE,
 } = require('../../constant/env');
 const { rawData } = require('../../helpers/mockData');
 const { initConnect, subscribeRPC } = require('./mqttConnector');
@@ -16,6 +17,7 @@ const startTime = new Date().toLocaleString();
 const timeArr = [];
 const saveOutputFrequency = Number(FILE.saveOutputFrequency) * 1000;
 const connectDelay = Number(BUFFER.connectDelay);
+const sendDataDelay = Number(MQTT.publish_frequency);
 const testTime = Number(MQTT.testTime);
 const isSaveLog = Boolean(FILE.isSaveLog);
 
@@ -47,20 +49,36 @@ function publishData(config) {
 function connectToTB(config) {
     const {
         device,
-        deviceListLength,
         isSendData,
         isSubscribeRPC,
-        isConnect,
+        idx,
     } = config;
 
-    if (isConnect) {
+    if (DEVICE.isRandomConnect) {
+        const isConnect = Math.random() > 0.5;
+        if (!isConnect) return;
+
         const client = initConnect(device);
 
         if (isSendData) {
             showDebugLog('MQTT', 'Client will send data');
             setTimeout(() => {
                 publishData({ ...config, client });
-            }, (connectDelay * deviceListLength));
+            }, (connectDelay * (idx + 1) + sendDataDelay));
+        }
+
+        if (isSubscribeRPC) {
+            showDebugLog('MQTT', 'Client will subscribe RPC topic');
+            subscribeRPC(client);
+        }
+    } else {
+        const client = initConnect(device);
+
+        if (isSendData) {
+            showDebugLog('MQTT', 'Client will send data');
+            setTimeout(() => {
+                publishData({ ...config, client });
+            }, (connectDelay * (idx + 1) + sendDataDelay));
         }
 
         if (isSubscribeRPC) {
@@ -70,18 +88,13 @@ function connectToTB(config) {
     }
 }
 
-function MQTTConnecter(config) {
-    // const { frequency, isSendData } = config;
-    const deviceListLength = deviceList.length;
-
+function createMQTTClient(config) {
     showDebugLog('MQTT', 'Try to connect to TB');
     deviceList.forEach((device, idx) => {
         const connectConfig = {
             ...config,
             device,
             idx,
-            deviceListLength,
-            isConnect: Math.random() > 0.5,
         };
 
         timeArr[idx] = 0;
@@ -101,6 +114,4 @@ if (isSaveLog) {
     }, saveOutputFrequency);
 }
 
-module.exports = {
-    MQTTConnecter,
-};
+module.exports = createMQTTClient;

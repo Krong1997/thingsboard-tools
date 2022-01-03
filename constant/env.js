@@ -28,6 +28,7 @@ module.exports = {
         deviceLabel: process.env.DEVICE_LABEL || '',
         numberOfDevices: process.env.NUMBER_OF_DEVICES || 1,
         isSendMockData: process.env.SEND_MOCK_DATA === 'true',
+        isRandomConnect: process.env.RANDOM_CONNECT === 'true',
         deviceListFileName,
     },
     FILE: {
