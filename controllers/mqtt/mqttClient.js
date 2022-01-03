@@ -1,3 +1,5 @@
+// eslint-disable-next-line no-unused-vars
+const { MqttClient } = require('mqtt');
 const {
     MQTT,
     FILE,
@@ -21,6 +23,15 @@ const sendDataDelay = Number(MQTT.publish_frequency);
 const testTime = Number(MQTT.testTime);
 const isSaveLog = Boolean(FILE.isSaveLog);
 
+/**
+ * @param {object} config
+ * @param {number} config.frequency
+ * @param {boolean} config.isSendData
+ * @param {boolean} config.isSubscribeRPC
+ * @param {object} config.device
+ * @param {number} config.idx
+ * @param {MqttClient} config.client
+ */
 function publishData(config) {
     const {
         client,
@@ -46,6 +57,14 @@ function publishData(config) {
     }, frequency);
 }
 
+/**
+ * @param {object} config
+ * @param {number} config.frequency
+ * @param {boolean} config.isSendData
+ * @param {boolean} config.isSubscribeRPC
+ * @param {object} config.device
+ * @param {number} config.idx
+ */
 function connectToTB(config) {
     const {
         device,
@@ -88,6 +107,13 @@ function connectToTB(config) {
     }
 }
 
+/**
+ * Create mqtt client by config
+ * @param {object} config
+ * @param {number} config.frequency
+ * @param {boolean} config.isSendData
+ * @param {boolean} config.isSubscribeRPC
+ */
 function createMQTTClient(config) {
     showDebugLog('MQTT', 'Try to connect to TB');
     deviceList.forEach((device, idx) => {
