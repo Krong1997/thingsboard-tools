@@ -4,13 +4,14 @@ const { showSimpleMessage, showErrorLog } = require('./showMsgOnLog');
 const { jsonStringify } = require('./jsonHandler');
 const deviceList = require('../output/deviceList.json');
 
-function saveTestInformation(count) {
+function saveTestInformation(count, start) {
     showSimpleMessage('Save output...');
     // 要處理檔案不存在的問題，可能從init下手
     const jsonPath = FILE.logFilePath;
     const data = jsonStringify({
         deviceCount: deviceList.length,
         testCount: count,
+        startTime: start,
         updateTime: new Date().toLocaleString(),
     });
 

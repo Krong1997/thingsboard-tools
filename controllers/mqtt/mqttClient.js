@@ -12,6 +12,7 @@ const { jsonStringify } = require('../../helpers/jsonHandler');
 // 要處理檔案不存在的問題，可能從init下手
 const deviceList = require('../../output/deviceList.json');
 
+const startTime = new Date().toLocaleString();
 const timeArr = [];
 const saveOutputFrequency = Number(FILE.saveOutputFrequency) * 1000;
 const connectDelay = Number(BUFFER.connectDelay);
@@ -96,7 +97,7 @@ function MQTTConnecter(config) {
 if (isSaveLog) {
     setInterval(() => {
         const totalTimes = timeArr.reduce((accu, curr) => accu + curr);
-        saveTestInformation(totalTimes);
+        saveTestInformation(totalTimes, startTime);
     }, saveOutputFrequency);
 }
 
