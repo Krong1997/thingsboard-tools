@@ -191,7 +191,7 @@ SUBSCRIBE_RPC=true
 
 
 ```
-npm run device-start
+npm run start-device
 ```
 
 ## 3.Virtual device RPC test
@@ -199,7 +199,7 @@ npm run device-start
 ### 3-1. Subscribe RPC topic & Virtual device start
 Make sure that `.env` exist and set SUBSCRIBE_RPC=true.
 ```
-npm run device-start
+npm run start-device
 ```
 
 ### 3-2. Get device id
