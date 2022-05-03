@@ -19,7 +19,6 @@ const startTime = new Date().toLocaleString();
 const timeArr = [];
 const saveOutputFrequency = Number(FILE.saveOutputFrequency) * 1000;
 const connectDelay = Number(BUFFER.connectDelay);
-const sendDataDelay = Number(MQTT.publish_frequency);
 const testTime = Number(MQTT.testTime);
 const isSaveLog = Boolean(FILE.isSaveLog);
 
@@ -36,7 +35,7 @@ function publishData(config) {
     const {
         client,
         device,
-        frequency,
+        frequency = 1000,
         idx,
     } = config;
 
@@ -54,7 +53,39 @@ function publishData(config) {
         }
 
         if (client.disconnected) clearInterval(timeId);
-    }, frequency);
+    }, frequency * 1000);
+}
+
+/**
+ * @param {object} config
+ * @param {number} config.frequency
+ * @param {boolean} config.isSendData
+ * @param {boolean} config.isSubscribeRPC
+ * @param {object} config.device
+ * @param {number} config.idx
+ * @param {MqttClient} config.client
+ */
+function setClientActionsInterval(config) {
+    const {
+        device,
+        isSendData,
+        isSubscribeRPC,
+        idx,
+        frequency,
+    } = config;
+    const client = initConnect(device);
+    showDebugLog('MQTT', 'Set client interval', { ...config, frequency, connectDelay });
+    if (isSendData) {
+        showDebugLog('MQTT', 'Client will send data');
+        setTimeout(() => {
+            publishData({ ...config, client });
+        }, (connectDelay * (idx + 1)));
+    }
+
+    if (isSubscribeRPC) {
+        showDebugLog('MQTT', 'Client will subscribe RPC topic');
+        subscribeRPC(client, device);
+    }
 }
 
 /**
@@ -66,44 +97,13 @@ function publishData(config) {
  * @param {number} config.idx
  */
 function connectToTB(config) {
-    const {
-        device,
-        isSendData,
-        isSubscribeRPC,
-        idx,
-    } = config;
-
     if (DEVICE.isRandomConnect) {
         const isConnect = Math.random() > 0.5;
         if (!isConnect) return;
 
-        const client = initConnect(device);
-
-        if (isSendData) {
-            showDebugLog('MQTT', 'Client will send data');
-            setTimeout(() => {
-                publishData({ ...config, client });
-            }, (connectDelay * (idx + 1) + sendDataDelay));
-        }
-
-        if (isSubscribeRPC) {
-            showDebugLog('MQTT', 'Client will subscribe RPC topic');
-            subscribeRPC(client);
-        }
+        setClientActionsInterval(config);
     } else {
-        const client = initConnect(device);
-
-        if (isSendData) {
-            showDebugLog('MQTT', 'Client will send data');
-            setTimeout(() => {
-                publishData({ ...config, client });
-            }, (connectDelay * (idx + 1) + sendDataDelay));
-        }
-
-        if (isSubscribeRPC) {
-            showDebugLog('MQTT', 'Client will subscribe RPC topic');
-            subscribeRPC(client);
-        }
+        setClientActionsInterval(config);
     }
 }
 

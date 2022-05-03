@@ -5,7 +5,7 @@ async function runTest() {
     const isSendData = Boolean(DEVICE.isSendMockData);
     const isSubscribeRPC = Boolean(MQTT.isSubscribeRPC);
     createMQTTClient({
-        frequency: MQTT.publish_frequency * 1000,
+        frequency: MQTT.publish_frequency,
         isSendData,
         isSubscribeRPC,
     });

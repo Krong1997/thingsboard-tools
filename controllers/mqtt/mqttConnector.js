@@ -5,7 +5,7 @@ const { saveErrorDeviceList, saveVirtualDeviceReceiveRPC } = require('../../help
 const { serverRPCTopic, responseRPCTopic } = require('../../constant/mqttTopic');
 const { jsonStringify, jsonParse } = require('../../helpers/jsonHandler');
 
-const RPCMessageList = [];
+const RPCMessageList = {};
 const errorDeviceList = [];
 const saveOutputFrequency = Number(FILE.saveOutputFrequency) * 1000;
 const isSaveLog = Boolean(FILE.isSaveLog);
@@ -31,10 +31,12 @@ function initConnect(device) {
     return client;
 }
 
-function subscribeRPC(client) {
+function subscribeRPC(client, device) {
+    let receivePacketCount = 0;
     client.subscribe(serverRPCTopic);
 
     client.on('message', (topic, message) => {
+        showSimpleMessage(`device: ${device.name}`);
         showSimpleMessage(`request.topic: ${topic}`);
         showSimpleMessage('request.body: ', jsonParse(message));
 
@@ -51,10 +53,12 @@ function subscribeRPC(client) {
         // client acts as an echo service
         client.publish(responseRPCTopic + requestId, responsePayload);
 
-        RPCMessageList.push({
-            topic,
-            serverRPCMessage: message.toString(),
-        });
+        receivePacketCount += 1;
+        RPCMessageList[`${device.name}`] = {
+            lastTopic: topic,
+            lastRPCMessage: message.toString(),
+            receivePacketCount,
+        };
     });
 }
 
