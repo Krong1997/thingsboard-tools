@@ -92,10 +92,7 @@ function mockStorageDynamic(storageNum) {
 
 function rawData(devName, storageNum) {
     return {
-        action: {
-            type: 'Recovering',
-            progress: randomNum(100),
-        },
+        action: randomNum(3) > 1 ? 'Recovering' : 'Reboot',
         CPU: {
             0: {
                 Freq: randomNum(1600),
@@ -138,6 +135,7 @@ function rawData(devName, storageNum) {
             FanRPM: randomNum(2560),
         },
         MEM: {
+            Usage: randomNum(100),
             memUsed: randomNum(16777216),
             temp: randomNum(50),
         },
@@ -150,6 +148,16 @@ function rawData(devName, storageNum) {
         },
         Dev: devName || 'device123456',
         Storage: mockStorageDynamic(storageNum),
+        EAPI: {
+            TEST_TYPE: {
+                'System temperature': '39.0000',
+                'CPU temperature': '38.0000',
+                VCORE: '1.6160',
+                VBAT: '3.0880',
+                'Fan mode': 'Normal Mode',
+                'Fan speed': '0.0000',
+            },
+        },
         FPGA: {
             DNA: '40020000015DF6A81C31C285',
             'System Configuration_OS name': 'Linux',
