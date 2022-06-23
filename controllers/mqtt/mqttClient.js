@@ -40,10 +40,10 @@ function publishData(config) {
     } = config;
 
     const timeId = setInterval(() => {
-        const data = jsonStringify(rawData(device.name, device.storageNum));
+        const data = jsonStringify(rawData(device.name || device.id, device.storageNum));
 
         client.publish(telemetryTopic, data, () => {
-            showSimpleMessage(`${device.name} send data`);
+            showSimpleMessage(`${device.name || device.id} send data`);
             timeArr[idx] += 1;
         });
 

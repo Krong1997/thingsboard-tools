@@ -12,7 +12,7 @@ async function sendStaticData() {
     const copyDeviceList = jsonParse(jsonStringify(deviceList));
     showDebugLog('Device', 'Send static data');
     for (let i = 0; i < deviceList.length; i += 1) {
-        const mockStatic = staticData(`iCAP-Client-demo-alias-${i}`);
+        const mockStatic = staticData(`${copyDeviceList[i].name || copyDeviceList[i].id}-${i}`);
         const storageLength = mockStatic.Storage.length;
         const opt = {
             method: 'post',

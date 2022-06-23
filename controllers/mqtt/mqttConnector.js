@@ -11,18 +11,19 @@ const saveOutputFrequency = Number(FILE.saveOutputFrequency) * 1000;
 const isSaveLog = Boolean(FILE.isSaveLog);
 
 function initConnect(device) {
+    const deviceName = device.name || device.id;
     const client = mqtt.connect(`mqtt://${SERVER.host}:${MQTT.port}`, {
         username: device.token,
     });
 
     client.once('connect', () => {
-        showSimpleMessage(`${device.name} connected`);
+        showSimpleMessage(`${deviceName} connected`);
     });
 
     client.once('error', (error) => {
-        showSimpleMessage(`${device.name} can't connect: ${error}`);
+        showSimpleMessage(`${deviceName} can't connect: ${error}`);
         errorDeviceList.push({
-            device: device.name,
+            device: deviceName,
             message: error,
         });
         client.end();
