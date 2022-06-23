@@ -58,6 +58,10 @@ npm i
 HOST= TB_server_host
 PORT= TB_server_port
 
+# iCAP SDK ip & host
+ICAP_HOST=10.204.16.110
+ICAP_PORT=3000
+
 # TB account setting
 ADMIN_EMAIL= Admin_email
 ADMIN_PASSWORD= Admin_password
@@ -69,7 +73,6 @@ TENANT_EMAIL= Tenant_email
 NUMBER_OF_DEVICES= TB_device_counts
 DEVICE_NAME= TB_device_name
 DEVICE_TYPE= TB_device_type
-DEVICE_LABEL= TB_device_label
 
 # MQTT settings
 MQTT_PORT= MQTT_port
@@ -210,7 +213,14 @@ After add device, you can see `deviceList.json` as follow.
 Copy this device id.
 ```json
 [
-    {"name":"device-0","id":"83e8c0b0-18bc-11ec-bcd9-05ea625289ba","token":"QDHyEI5isiE7sRkqQKWj"}
+    {"name":"device-0","id":"83e8c0b0-18bc-11ec-bcd9-05ea625289ba","token":"QDHyEI5isiE7sRkqQKWj","storageNum":0}
+]
+```
+
+If device name is undefined, the json file output as follow
+```json
+[
+    {"id":"83e8c0b0-18bc-11ec-bcd9-05ea625289ba","token":"QDHyEI5isiE7sRkqQKWj","storageNum":0}
 ]
 ```
 
