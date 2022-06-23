@@ -93,7 +93,7 @@ function mockStorageDynamic(storageNum) {
 }
 
 function rawData(devName, storageNum) {
-    showDebugLog(`device name: ${devName} send dynamic data, storage count is ${storageNum}`);
+    showDebugLog('raw data generator', `device name: ${devName} send dynamic data, storage count is ${storageNum}`);
     return {
         action: randomNum(3) > 1 ? 'Recovering' : 'Reboot',
         CPU: {
@@ -206,7 +206,7 @@ function rawData(devName, storageNum) {
 }
 
 function staticData(name) {
-    showDebugLog(`device name: ${name} send static data`);
+    showDebugLog('static data generator', `device name: ${name} send static data`);
     return {
         CPU: {
             Manu: ' GenuineIntel',
