@@ -51,4 +51,8 @@ module.exports = {
     BUFFER: {
         connectDelay: process.env.CONNECT_DELAY || 5,
     },
+    ICAP: {
+        host: process.env.ICAP_HOST || '127.0.0.1',
+        port: process.env.ICAP_PORT || '3000',
+    },
 };

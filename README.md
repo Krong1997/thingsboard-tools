@@ -95,6 +95,8 @@ DEBUG=false
 |-----------------------|-----------------------------------------------------------|---------------|
 | HOST                  | TB server host                                            | 127.0.0.1     |
 | PORT                  | TB server port                                            | 80            |
+| ICAP_HOST             | iCAP SDK host                                             | 127.0.0.1     |
+| ICAP_PORT             | iCAP SDK port                                             | 3000          |
 | ADMIN_EMAIL           | Admin email                                               | sysadmin@thingsboard.org |
 | ADMIN_PASSWORD        | Admin password                                            | sysadmin      |
 | TENANT_EMAIL          | Tenant email                                              | test@gmail.com |

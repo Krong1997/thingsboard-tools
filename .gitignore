@@ -1,6 +1,6 @@
 node_modules
 .env
-deviceList.json
+deviceList*.json
 MockDataInfo*.json
 ErrorLog*.json
 RPCMessageLog*.json
